@@ -1,76 +1,86 @@
-### Short Project Description
+# Multi-Input Model for OCR
 
-**Multi-Input Model for OCR** is an AI-powered Optical Character Recognition (OCR) application that accepts multiple input formats—including images and PDF documents—and extracts machine-readable text using modern multimodal vision-language models. The project provides a unified interface for document digitization, making it suitable for document processing, information extraction, and downstream AI workflows. Modern vision-language OCR models provide significantly better performance on complex layouts than traditional OCR engines. ([GitHub][1])
+A multimodal Optical Character Recognition (OCR) system that combines visual document understanding with natural language prompts to extract structured text from images. The project demonstrates how modern vision-language models can leverage both image input and textual instructions to improve OCR accuracy and flexibility across different document types.
 
 ---
 
-# README.md
-
-```markdown
-# Multi-Input Model for OCR
-
-An intelligent Optical Character Recognition (OCR) application capable of extracting text from multiple document formats using modern AI vision-language models.
-
 ## Overview
 
-Multi-Input Model for OCR provides a simple interface for converting images and PDF documents into structured, machine-readable text.
+Traditional OCR systems focus solely on recognizing text from images. This project extends that workflow by incorporating multiple input modalities, allowing the model to understand both:
 
-Unlike traditional OCR systems that rely solely on character detection, this project leverages multimodal AI models capable of understanding complex document layouts, handwritten content, tables, and mixed visual-text information.
+- Document images
+- User-provided text prompts or instructions
 
-The application is designed for developers, researchers, and businesses that require reliable document digitization for downstream AI or automation workflows.
+This approach enables more context-aware document understanding, making it suitable for extracting specific information rather than simply transcribing all visible text.
 
 ---
 
 ## Features
 
-- Image OCR
-  - PNG
-  - JPG
-  - JPEG
-  - BMP
-  - WebP
-
-- PDF OCR
-
-- Multiple input support
-
-- AI-powered text extraction
-
-- Clean and structured output
-
-- Simple and extensible architecture
+- Multi-input inference pipeline
+- OCR from images using a vision-language model
+- Prompt-guided information extraction
+- Structured text generation
+- Modular preprocessing and inference workflow
+- Easily extensible to different document formats
 
 ---
 
 ## Use Cases
 
-- Digitizing printed documents
-- Extracting text from scanned PDFs
-- Processing invoices and receipts
-- Reading handwritten notes
-- Academic document processing
-- Preparing documents for Retrieval-Augmented Generation (RAG)
-- Business document automation
+- Receipt digitization
+- Invoice processing
+- Identity document parsing
+- Form extraction
+- Business card digitization
+- Academic document analysis
+- General document OCR
 
 ---
 
 ## Project Structure
 
-```
-
+```text
 Multi-Input-Model-For-OCR/
 │
-├── app.py
+├── app/                 # Application entry point
+├── models/              # Model loading and configuration
+├── utils/               # Image preprocessing utilities
+├── inference/           # OCR inference pipeline
+├── examples/            # Sample inputs
 ├── requirements.txt
-├── models/
-├── utils/
-├── assets/
-├── examples/
 └── README.md
+```
 
-````
+*(Directory names may vary slightly depending on the current implementation.)*
 
-*(Directory structure may vary depending on future development.)*
+---
+
+## How It Works
+
+1. An image containing text is provided.
+2. The image is preprocessed for optimal recognition.
+3. A textual instruction or prompt is supplied alongside the image.
+4. The multimodal model jointly processes both inputs.
+5. The model returns the requested textual information in a structured format.
+
+```
+Image
+   │
+   ▼
+Image Preprocessing
+   │
+   ├─────────────┐
+   ▼             ▼
+Image Encoder   Text Prompt
+       │         │
+       └────┬────┘
+            ▼
+ Vision-Language Model
+            │
+            ▼
+ Structured OCR Output
+```
 
 ---
 
@@ -82,7 +92,7 @@ Clone the repository:
 git clone https://github.com/kinola-IQ/Multi-Input-Model-For-OCR.git
 
 cd Multi-Input-Model-For-OCR
-````
+```
 
 Create a virtual environment:
 
@@ -120,57 +130,113 @@ Run the application:
 python app.py
 ```
 
-Upload an image or PDF through the interface and the application will return the extracted text.
+or
+
+```bash
+python main.py
+```
+
+depending on the project entry point.
+
+Example workflow:
+
+```python
+image = "sample_document.png"
+
+prompt = """
+Extract the invoice number,
+date,
+vendor name,
+and total amount.
+"""
+
+result = model.predict(image, prompt)
+
+print(result)
+```
 
 ---
 
-## Example Workflow
+## Example Prompt
 
 ```
-Image / PDF
-      │
-      ▼
-Input Processing
-      │
-      ▼
-Vision-Language OCR Model
-      │
-      ▼
-Text Extraction
-      │
-      ▼
-Structured Output
+Extract all handwritten text from this document.
+
+Return the output as JSON with:
+
+- Name
+- Address
+- Phone Number
+- Email
 ```
 
 ---
 
-## Technologies
+## Example Output
 
-* Python
-* OCR
-* Vision-Language Models (VLMs)
-* PDF Processing
-* Computer Vision
+```json
+{
+  "name": "John Doe",
+  "address": "12 Main Street",
+  "phone": "+1 555-123-4567",
+  "email": "john@example.com"
+}
+```
+
+---
+
+## Technologies Used
+
+- Python
+- PyTorch
+- Hugging Face Transformers
+- Vision-Language Models
+- Pillow
+- NumPy
 
 ---
 
 ## Future Improvements
 
-* Batch document processing
-* Table extraction
-* Handwriting optimization
-* Layout-aware OCR
-* Export to Markdown
-* Export to JSON
-* Confidence scoring
-* REST API
-* Docker support
+- PDF support
+- Batch document processing
+- Table extraction
+- Layout-aware document understanding
+- Confidence score visualization
+- REST API deployment
+- Docker support
+- Streamlit web interface
+
+---
+
+## Learning Objectives
+
+This project explores:
+
+- Multimodal AI systems
+- Vision-language models
+- Prompt-guided OCR
+- Document understanding
+- Information extraction
+- AI application development
+
+---
+
+## Contributing
+
+Contributions are welcome.
+
+1. Fork the repository.
+2. Create a feature branch.
+3. Commit your changes.
+4. Push the branch.
+5. Open a Pull Request.
 
 ---
 
 ## License
 
-This project is released under the MIT License.
+This project is licensed under the MIT License.
 
 ---
 
@@ -178,9 +244,6 @@ This project is released under the MIT License.
 
 **Omolayo Akinola**
 
-AI Engineer focused on building practical AI systems, multimodal applications, Retrieval-Augmented Generation (RAG), and intelligent automation.
+Applied AI Engineer
 
-```
-```
-
-[1]: https://github.com/zai-org/GLM-OCR?utm_source=chatgpt.com "GitHub - zai-org/GLM-OCR: GLM-OCR: Accurate × Fast × Comprehensive · GitHub"
+GitHub: https://github.com/kinola-IQ
